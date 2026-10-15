@@ -1,16 +1,7 @@
 
-import express from "express";
+import app from "./app.js";
 
-const app = express();
-
-const PORT = 3000;
-
-app.get("/health", (_req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "EventFlow API is running",
-  });
-});
+const PORT = Number(process.env.PORT ?? 3000);
 
 app.listen(PORT, () => {
   console.log(`EventFlow API running at http://localhost:${PORT}`);
