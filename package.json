@@ -1,0 +1,15 @@
+
+{
+  "name": "eventflow",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EventFlow - Smart Event and Ticketing Platform",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=@eventflow/api",
+    "dev:web": "npm run dev --workspace=@eventflow/web"
+  }
+}
