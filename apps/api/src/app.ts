@@ -2,6 +2,10 @@ import express from "express";
 import {testRequestSchema} from "./schemas/test.schema.js";
 import {validateBody} from "./middleware/validate-body.js";
 
+import testRoutes from "./routes/test.routes.js";
+import { notFoundHandler } from "./middleware/not-found.js";
+import { errorHandler } from "./middleware/error-handler.js";
+
 const app = express();
 
 app.use(express.json());
@@ -15,21 +19,13 @@ app.get("/health", (_req, res) => {
 
 });
 
-app.post("/api/v1/test", validateBody(testRequestSchema), (req,res)=>{
-    const {message} = req.body;
-    if(typeof message !== "string" || message.trim() === ""){
-        res.status(400).json({
-            success: false,
-            message: "A non-empty message is required."
-        });
-        return;
-    }
-    res.status(201).json({
-        success: true,
-        data:{
-            message: message.trim(),
-        },
-    });
-});
+// Register test routes under the API v1 prefix
+app.use("/api/v1", testRoutes);
+
+// Handle routes that do not exist
+app.use(notFoundHandler);
+
+// Handle errors passed through Express
+app.use(errorHandler);
 
 export default app;
