@@ -3,6 +3,7 @@ import {testRequestSchema} from "./schemas/test.schema.js";
 import {validateBody} from "./middleware/validate-body.js";
 
 import testRoutes from "./routes/test.routes.js";
+import eventRoutes from "./routes/event.routes.js";
 import { notFoundHandler } from "./middleware/not-found.js";
 import { errorHandler } from "./middleware/error-handler.js";
 
@@ -43,12 +44,15 @@ app.get("/health/database", async (_req, res) => {
 });
 // Register test routes under the API v1 prefix
 app.use("/api/v1", testRoutes);
+// Register event routes under the API v1 prefix
+app.use("/api/v1", eventRoutes);
 
 app.use(
   "/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(openApiDocument),
 );
+
 
 // Handle routes that do not exist
 app.use(notFoundHandler);
